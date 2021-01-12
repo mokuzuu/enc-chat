@@ -20,6 +20,7 @@ const PORT = 8000
 io.on('connection', (socket: Socket) => {
   console.log('CONNECTED')
   socket.on('join-room', (roomId, user) => {
+    socket.join(roomId)
     socket.to(roomId).emit('join-room', user)
   })
   socket.on('send-message', (roomId, sender, message) => {
