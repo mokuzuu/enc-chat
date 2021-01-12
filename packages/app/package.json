@@ -8,10 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@chakra-ui/react": "^1.1.2",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
+    "@types/socket.io-client": "^1.4.34",
     "next": "10.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1",
-    "recoil": "^0.1.2"
+    "recoil": "^0.1.2",
+    "socket.io-client": "^3.0.5"
   },
   "devDependencies": {
     "@types/node": "^14.14.20",
