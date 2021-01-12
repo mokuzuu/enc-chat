@@ -13,7 +13,6 @@ export const UserInput = ({ portal }: { portal: Portal }) => {
   }
   const updateMessgages = (text) => {
     setMessages((curVal) => {
-      console.log(`text is ${text}`)
       return [...curVal, { sender: loggedInUser, text }]
     })
   }

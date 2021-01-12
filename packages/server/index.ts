@@ -23,6 +23,7 @@ io.on('connection', (socket: Socket) => {
     socket.to(roomId).emit('join-room', user)
   })
   socket.on('send-message', (roomId, sender, message) => {
+    console.log(`roomId: ${roomId.length}`)
     console.log(`encrypted sender: ${sender}`)
     console.log(`encrypted message: ${message}`)
     socket.to(roomId).emit('new-message', sender, message)

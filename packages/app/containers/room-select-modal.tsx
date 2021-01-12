@@ -8,7 +8,6 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Spinner,
   ModalCloseButton,
   Input,
 } from '@chakra-ui/react'
@@ -24,13 +23,9 @@ export const RoomSelectModal = ({ onClose }: { onClose: () => void }) => {
     const roomLinkData = getCollaborationLinkData(window.location.href)
     if (roomLinkData) {
       const [, roomId, roomKey] = roomLinkData
-      console.log('IM ACHIVED')
       if (roomId && roomKey) {
         onClose()
-        // initializeSocketClient()
       }
-    } else {
-      // setIsModalOpen(true)
     }
   }, [])
   const onConfirmClick = async () => {

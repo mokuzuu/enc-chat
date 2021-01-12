@@ -12,8 +12,8 @@ export const ChatRoom = () => {
         overflowX: 'hidden',
       }}
     >
-      {messages.map((message) => (
-        <Message sender={message.sender} text={message.text} />
+      {messages.map((message, i) => (
+        <Message sender={message.sender} text={message.text} key={i} />
       ))}
     </div>
   )

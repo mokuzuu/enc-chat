@@ -15,7 +15,6 @@ class Portal {
   onNewUser(setSender: (sender: string) => void) {
     if (!this.socket) return
     this.socket.on('new-user', (sender: string) => {
-      console.log('hello', sender)
       setSender(sender)
     })
   }
