@@ -1,26 +1,31 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import {ChatRoom} from "../containers/chat-room"
-import {UserInput} from "../containers/user-input"
-import {
-  RecoilRoot,
-  atom,
-  selector,
-  useRecoilState,
-  useRecoilValue,
-} from 'recoil';
+import { RoomSelectModal } from '../containers/room-select-modal'
+import { useRef, useState } from 'react'
+import { UserNameModal } from '../containers/user-name-modal'
+import Portal from '../components/collab/portal'
+import { Main } from '../containers/main'
 
 export default function Index() {
-  return (
-    <RecoilRoot>
-      <div style={{
-        height: 'calc(100vh - 50px)',
-        width: '100%'
-      }}>
-      <ChatRoom />
-      </div>
-      <UserInput />
-    </RecoilRoot>
-  )
+  const [isRoomSelected, setIsRoomSelected] = useState(false)
+  const [isUserNameSelected, setIsUserNameSelected] = useState(false)
+  const portal = useRef(new Portal())
+
+  if (!isUserNameSelected) {
+    return (
+      <UserNameModal
+        onComplete={() => {
+          setIsUserNameSelected(true)
+        }}
+      />
+    )
+  }
+  if (!isRoomSelected) {
+    return (
+      <RoomSelectModal
+        onClose={() => {
+          setIsRoomSelected(true)
+        }}
+      />
+    )
+  }
+  return <Main portal={portal.current} />
 }
