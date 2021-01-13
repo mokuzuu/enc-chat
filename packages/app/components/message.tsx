@@ -1,3 +1,5 @@
+import { Box } from '@chakra-ui/react'
+
 export const Message = ({
   sender: name,
   text,
@@ -6,17 +8,21 @@ export const Message = ({
   text: string
 }) => {
   return (
-    <div
-      style={{
-        minHeight: '100px',
-        width: '100%',
-        borderBottom: '1px solid grey',
-        display: 'flex',
-      }}
+    <Box
+      paddingTop="2rem"
+      paddingBottom="2rem"
+      paddingLeft="1rem"
+      display="flex"
+      borderColor="grey"
+      borderWidth="1px"
+      marginTop="1rem"
+      marginRight="0.5rem"
+      marginLeft="0.5rem"
+      borderRadius="0.5rem"
     >
-      <div
+      <Box
+        flexBasis="5rem"
         style={{
-          flexBasis: '100px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -24,17 +30,17 @@ export const Message = ({
         }}
       >
         {name}
-      </div>
-      <div
+      </Box>
+      <Box
+        paddingLeft="1rem"
         style={{
           flex: 1,
           display: 'flex',
           alignItems: 'center',
-          paddingLeft: '10px',
         }}
       >
         {text}
-      </div>
-    </div>
+      </Box>
+    </Box>
   )
 }
