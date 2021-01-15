@@ -11,13 +11,14 @@ import {
   ModalCloseButton,
   Input,
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { generateCollaborationLink, getCollaborationLinkData } from '../data'
 type ButtonType = 'CREATE_ROOM' | 'JOIN_ROOM'
 export const RoomSelectModal = ({ onClose }: { onClose: () => void }) => {
   const [buttonSelection, setButtonSelection] = useState<ButtonType | null>(
     null
   )
+  const inputRef = useRef<HTMLInputElement>(null)
   const [activeLink, setActiveLink] = useState(null)
   useEffect(() => {
     const roomLinkData = getCollaborationLinkData(window.location.href)
@@ -32,9 +33,17 @@ export const RoomSelectModal = ({ onClose }: { onClose: () => void }) => {
     if (buttonSelection === 'JOIN_ROOM') return
     const link = await generateCollaborationLink()
     window.history.pushState({}, '', link[0])
-    setActiveLink(link)
+    setActiveLink(link[0])
   }
+  const onInputClick = () => {
+    if (!inputRef.current) return
+    inputRef.current.select()
+    inputRef.current.setSelectionRange(0, 99999) /* For mobile devices */
+    document.execCommand('copy')
 
+    /* Alert the copied text */
+    alert('Copied the url! Close this dialog and start chat! ')
+  }
   return (
     <Modal isOpen={true} onClose={() => {}}>
       <ModalOverlay />
@@ -74,7 +83,14 @@ export const RoomSelectModal = ({ onClose }: { onClose: () => void }) => {
             <Button onClick={onConfirmClick}>確定</Button>
           </ModalFooter>
         )}
-        {activeLink && <Input value={activeLink} isReadOnly />}
+        {activeLink && (
+          <Input
+            value={activeLink}
+            isReadOnly
+            onClick={onInputClick}
+            ref={inputRef}
+          />
+        )}
       </ModalContent>
     </Modal>
   )
