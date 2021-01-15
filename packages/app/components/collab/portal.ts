@@ -8,7 +8,7 @@ class Portal {
   roomKey: string | null = null
   constructor() {}
   open(id: string, key: string) {
-    this.socket = socketIoClient(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL)
+    this.socket = socketIoClient('http://localhost:8000')
     this.roomId = id
     this.roomKey = key
   }
