@@ -5,6 +5,7 @@
   "author": "Mokuzu",
   "license": "MIT",
   "scripts": {
+    "install": "concurrently \"cd packages/app && yarn\" \"cd packages/server && yarn\"",
     "start": "concurrently \"cd packages/app && yarn dev\" \"cd packages/server && yarn start\""
   },
   "devDependencies": {
