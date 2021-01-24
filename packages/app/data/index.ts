@@ -1,3 +1,5 @@
+import { Message } from '../types'
+
 export type EncryptedData = {
   data: ArrayBuffer
   iv: Uint8Array
@@ -83,7 +85,7 @@ export const decryptAESGEM = async (
   data: ArrayBuffer,
   key: string,
   iv: Uint8Array
-): Promise<any> => {
+): Promise<Message> => {
   try {
     const importedKey = await getImportedKey(key, 'decrypt')
     const decrypted = await window.crypto.subtle.decrypt(
@@ -97,7 +99,7 @@ export const decryptAESGEM = async (
     const decodedData = new TextDecoder('utf-8').decode(
       new Uint8Array(decrypted) as any
     )
-    return JSON.parse(decodedData)
+    return JSON.parse(decodedData) as Message
   } catch (error) {
     window.alert('Error occured')
     console.error(error)
