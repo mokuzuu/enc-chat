@@ -1,5 +1,6 @@
 import socketIoClient from 'socket.io-client'
 import { decryptAESGEM, encryptAESGEM } from '../../data'
+import { Message } from '../../types'
 
 class Portal {
   socket: SocketIOClient.Socket | null = null
@@ -24,15 +25,7 @@ class Portal {
       console.log(user)
     })
   }
-  onNewMessage(
-    setMessage: ({
-      sender,
-      message,
-    }: {
-      sender: string
-      message: string
-    }) => void
-  ) {
+  onNewMessage(setMessage: ({ sender, text }: Message) => void) {
     this.socket.on(
       'new-message',
       async (encryptedData: ArrayBuffer, iv: Uint8Array) => {
@@ -46,7 +39,7 @@ class Portal {
         )
         setMessage({
           sender: decryptedData.sender,
-          message: decryptedData.message,
+          text: decryptedData.message,
         })
       }
     )
