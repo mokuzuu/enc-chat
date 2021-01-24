@@ -20,7 +20,7 @@ export const UserInput = ({ portal }: { portal: Portal }) => {
     const onEnterPressed = (e) => {
       if (e.keyCode === 13) {
         e.preventDefault()
-        portal.emitSendMessage(name, e.target.value)
+        portal.emitSendMessage({ sender: name, text: e.target.value })
         updateMessgages(e.target.defaultValue)
         clearnUpInput()
       }
@@ -46,7 +46,7 @@ export const UserInput = ({ portal }: { portal: Portal }) => {
           size="sm"
           onClick={() => {
             updateMessgages(text)
-            portal.emitSendMessage(name, text)
+            portal.emitSendMessage({ sender: name, text })
             clearnUpInput()
           }}
         >

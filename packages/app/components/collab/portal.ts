@@ -39,7 +39,7 @@ class Portal {
         )
         setMessage({
           sender: decryptedData.sender,
-          text: decryptedData.message,
+          text: decryptedData.text,
         })
       }
     )
@@ -57,8 +57,8 @@ class Portal {
   isOpen() {
     return !!(this.socketInitialized && this.socket)
   }
-  async emitSendMessage(sender: string, message: string) {
-    const json = JSON.stringify({ sender, message })
+  async emitSendMessage({ sender, text }: Message) {
+    const json = JSON.stringify({ sender, text })
     const encoded = new TextEncoder().encode(json)
     const encrypted = await encryptAESGEM(encoded, this.roomKey)
     this.socket.emit('send-message', this.roomId, encrypted.data, encrypted.iv)
