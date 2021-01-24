@@ -24,7 +24,7 @@ export const UserNameModal = ({ onComplete }: { onComplete: () => void }) => {
     <Modal isOpen={true} onClose={() => {}}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Chat roomでの名前を入力してください</ModalHeader>
+        <ModalHeader>What is your name in chat ?</ModalHeader>
         <ModalBody pb={6} width="100%" display="flex" flexDir="column">
           <Input
             value={userName}
@@ -33,7 +33,7 @@ export const UserNameModal = ({ onComplete }: { onComplete: () => void }) => {
         </ModalBody>
         {userName && (
           <ModalFooter>
-            <Button onClick={onConfirmClick}>確定</Button>
+            <Button onClick={onConfirmClick}>Confirm</Button>
           </ModalFooter>
         )}
       </ModalContent>

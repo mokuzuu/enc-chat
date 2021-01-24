@@ -48,7 +48,7 @@ export const RoomSelectModal = ({ onClose }: { onClose: () => void }) => {
     <Modal isOpen={true} onClose={() => {}}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Chat roomの選択</ModalHeader>
+        <ModalHeader>Choose a chat room</ModalHeader>
         {activeLink && <ModalCloseButton onClick={onClose} />}
         <ModalBody pb={6} width="100%" display="flex" flexDir="column">
           <Container
@@ -63,24 +63,26 @@ export const RoomSelectModal = ({ onClose }: { onClose: () => void }) => {
               }
               onClick={() => setButtonSelection('CREATE_ROOM')}
             >
-              Roomを作る
+              Create a new room
             </Button>
             <Button
               colorScheme={buttonSelection === 'JOIN_ROOM' ? 'blue' : undefined}
               onClick={() => setButtonSelection('JOIN_ROOM')}
             >
-              Roomに参加する
+              Join a room
             </Button>
           </Container>
           {buttonSelection === 'JOIN_ROOM' && (
             <Container>
-              <Text>アドレスバーにシェアリンクを貼りロードしてください。</Text>
+              <Text>
+                Get a sharable url from others, then load a tab to join a room
+              </Text>
             </Container>
           )}
         </ModalBody>
         {buttonSelection === 'CREATE_ROOM' && !activeLink && (
           <ModalFooter>
-            <Button onClick={onConfirmClick}>確定</Button>
+            <Button onClick={onConfirmClick}>Confirm</Button>
           </ModalFooter>
         )}
         {activeLink && (
