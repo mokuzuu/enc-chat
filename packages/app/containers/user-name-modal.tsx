@@ -6,18 +6,17 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  ModalCloseButton,
   Input,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { useSetRecoilState } from 'recoil'
-import { loggedInUserState } from '../recoil/atoms'
+import { useDispatch } from 'react-redux'
+import { userActions } from '../store/user'
 
 export const UserNameModal = ({ onComplete }: { onComplete: () => void }) => {
-  const setLoggedInUser = useSetRecoilState(loggedInUserState)
+  const dispatch = useDispatch()
   const [userName, setUserName] = useState('')
   const onConfirmClick = () => {
-    setLoggedInUser(userName)
+    dispatch(userActions.updateName({ name: userName }))
     onComplete()
   }
   return (

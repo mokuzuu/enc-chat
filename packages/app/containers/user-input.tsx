@@ -1,27 +1,26 @@
 import { useEffect, useRef, useState } from 'react'
-import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
-import { loggedInUserState, messagesState, portalState } from '../recoil/atoms'
 import { Button, Input, InputGroup, InputRightElement } from '@chakra-ui/react'
 import Portal from '../components/collab/portal'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { messageActions } from '../store/message'
 export const UserInput = ({ portal }: { portal: Portal }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [text, changeText] = useState('')
-  const setMessages = useSetRecoilState(messagesState)
-  const loggedInUser = useRecoilValue(loggedInUserState)
+  const dispatch = useDispatch()
+  const name = useSelector((state: RootState) => state.user.name)
   const clearnUpInput = () => {
     changeText('')
   }
   const updateMessgages = (text) => {
-    setMessages((curVal) => {
-      return [...curVal, { sender: loggedInUser, text }]
-    })
+    dispatch(messageActions.addMessage({ message: { text, sender: name } }))
   }
   useEffect(() => {
     if (!inputRef.current) return
     const onEnterPressed = (e) => {
       if (e.keyCode === 13) {
         e.preventDefault()
-        portal.emitSendMessage(loggedInUser, e.target.value)
+        portal.emitSendMessage(name, e.target.value)
         updateMessgages(e.target.defaultValue)
         clearnUpInput()
       }
@@ -47,7 +46,7 @@ export const UserInput = ({ portal }: { portal: Portal }) => {
           size="sm"
           onClick={() => {
             updateMessgages(text)
-            portal.emitSendMessage(loggedInUser, text)
+            portal.emitSendMessage(name, text)
             clearnUpInput()
           }}
         >
