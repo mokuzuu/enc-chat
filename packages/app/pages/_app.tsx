@@ -1,12 +1,13 @@
 import '../styles/globals.css'
-import { RecoilRoot } from 'recoil'
 import { ChakraProvider } from '@chakra-ui/react'
+import { Provider } from 'react-redux'
+import store from '../store'
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <RecoilRoot>
+      <Provider store={store}>
         <Component {...pageProps} />
-      </RecoilRoot>
+      </Provider>
     </ChakraProvider>
   )
 }
