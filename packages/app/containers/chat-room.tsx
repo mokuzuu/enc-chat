@@ -1,8 +1,8 @@
-import { useRecoilState } from 'recoil'
 import { Message } from '../components/message'
-import { messagesState } from '../recoil/atoms'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
 export const ChatRoom = () => {
-  const [messages] = useRecoilState(messagesState)
+  const messages = useSelector((state: RootState) => state.message.messages)
   return (
     <div
       style={{

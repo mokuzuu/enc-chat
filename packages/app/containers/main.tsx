@@ -1,15 +1,15 @@
 import { useEffect } from 'react'
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useDispatch } from 'react-redux'
 import Portal from '../components/collab/portal'
 import { getCollaborationLinkData } from '../data'
-import { loggedInUserState, messagesState, senderState } from '../recoil/atoms'
 import { ChatRoom } from './chat-room'
 import { UserInput } from './user-input'
-
+import { useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { messageActions } from '../store/message'
 export const Main = ({ portal }: { portal: Portal }) => {
-  const loggedInUser = useRecoilValue(loggedInUserState)
-  const setNewMessage = useSetRecoilState(messagesState)
-  const setSender = useSetRecoilState(senderState)
+  const userName = useSelector((state: RootState) => state.user.name)
+  const dispatch = useDispatch()
   const initializeSocketClient = async () => {
     if (portal.socket) {
       return
@@ -20,17 +20,14 @@ export const Main = ({ portal }: { portal: Portal }) => {
       const roomKey = roomMatch[2]
       portal.open(roomId, roomKey)
       portal.onJoinRoom()
-      portal.onNewMessage(({ sender, message }) =>
-        setNewMessage((curVal) => {
-          return [...curVal, { sender, text: message }]
-        })
+      portal.onNewMessage(({ sender, text }) =>
+        dispatch(
+          messageActions.addMessage({
+            message: { sender, text },
+          })
+        )
       )
-      portal.onNewUser((sender) => {
-        setSender((curVal) => {
-          return [...curVal, sender]
-        })
-      })
-      portal.emitJoinRoom(loggedInUser)
+      portal.emitJoinRoom(userName)
     }
   }
 
